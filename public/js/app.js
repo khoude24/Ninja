@@ -43456,19 +43456,19 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.word.name,
-                        expression: "word.name"
+                        value: _vm.update_word.name,
+                        expression: "update_word.name"
                       }
                     ],
                     staticClass: "form-control",
                     attrs: { type: "text", placeholder: "Ninja name" },
-                    domProps: { value: _vm.word.name },
+                    domProps: { value: _vm.update_word.name },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.word, "name", $event.target.value)
+                        _vm.$set(_vm.update_word, "name", $event.target.value)
                       }
                     }
                   })
@@ -43484,19 +43484,23 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.word.name,
-                        expression: "word.name"
+                        value: _vm.update_word.pirate_name,
+                        expression: "update_word.pirate_name"
                       }
                     ],
                     staticClass: "form-control",
                     attrs: { type: "text", placeholder: "Pirate name" },
-                    domProps: { value: _vm.word.name },
+                    domProps: { value: _vm.update_word.pirate_name },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.word, "name", $event.target.value)
+                        _vm.$set(
+                          _vm.update_word,
+                          "pirate_name",
+                          $event.target.value
+                        )
                       }
                     }
                   })
