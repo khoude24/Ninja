@@ -43460,6 +43460,7 @@ var render = function() {
                         expression: "word.name"
                       }
                     ],
+                    staticClass: "form-control",
                     attrs: { type: "text", placeholder: "Ninja name" },
                     domProps: { value: _vm.word.name },
                     on: {
@@ -43487,6 +43488,7 @@ var render = function() {
                         expression: "word.name"
                       }
                     ],
+                    staticClass: "form-control",
                     attrs: { type: "text", placeholder: "Pirate name" },
                     domProps: { value: _vm.word.name },
                     on: {
