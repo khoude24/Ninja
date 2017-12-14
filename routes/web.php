@@ -24,3 +24,7 @@ Route::get('admin', 'Admin@index')->middleware('auth');
 Route::get('words/valid', 'Words@validWord');
 Route::resource('words', 'Words');
 Route::resource('admin', 'Admin');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

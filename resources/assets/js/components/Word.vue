@@ -114,11 +114,11 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Ninja name:</label>
-                            <input type="text" placeholder="Ninja name" v-model="word.name"></input>
+                            <input type="text" placeholder="Ninja name" class="form-control" v-model="word.name"></input>
                         </div>
                         <div class="form-group">
                             <label for="name">Pirate name:</label>
-                            <input type="text" placeholder="Pirate name" v-model="word.name"></input>
+                            <input type="text" placeholder="Pirate name" class="form-control" v-model="word.name"></input>
                         </div>
                     </div>
                     <div class="modal-footer">
