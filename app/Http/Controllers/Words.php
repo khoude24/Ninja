@@ -25,12 +25,11 @@ class Words extends Controller
     {
 
         $client = new Client(); //GuzzleHttp\Client
-        $stat = $client->get('ninja-backend.test/api/words', ['verify' => false]);
+        $stat = $client->get(config('app.api_url').'words', ['verify' => false]);
 
         return response()->json([
             'words'    => json_decode($stat->getBody()),
         ], 200);
-
     }
 
     /**

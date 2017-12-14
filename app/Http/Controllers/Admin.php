@@ -16,7 +16,9 @@ class Admin extends Controller
         $client = new Client();
 
         // Get awesome words list
-        $words = $client->get(config('GET', config('app.api_url').'words', ['verify' => false]));
+        $words = $client->request('GET', config('app.api_url').'words', [
+            'verify' => false
+        ]);
         $words = json_decode($words->getBody(), true);
         $words = collect($words);
 
