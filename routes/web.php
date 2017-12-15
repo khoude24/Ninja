@@ -22,9 +22,13 @@ Route::get('words', 'Ninja@getWords');
 Route::get('login', 'Auth\LoginController@showLoginForm');
 Route::get('admin', 'Admin@index')->middleware('auth');
 Route::get('words/valid', 'Words@validWord');
-Route::resource('words', 'Words');
-Route::resource('admin', 'Admin');
+Route::resource('words', 'Words')->middleware('auth', ['except' => ['index', 'validWord']]);
+;
+Route::resource('admin', 'Admin')->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/register', function () {
+    return redirect('/');
+});
