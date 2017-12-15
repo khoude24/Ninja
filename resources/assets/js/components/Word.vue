@@ -168,12 +168,13 @@
 
                         this.reset();
 
-                        this.word.push(response.data.word);
+                        this.words.push(response.data.word);
 
                         $("#add_word_model").modal("hide");
 
                     })
                     .catch(error => {
+
                         this.errors = [];
                         if (error.response.data.errors.word) {
                             this.errors.push(error.response.data.errors.word[0]);
