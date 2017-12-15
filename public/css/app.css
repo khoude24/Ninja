@@ -8546,3 +8546,7 @@ button.close {
   display: none;
 }
 
+[v-cloak] {
+  display: none;
+}
+

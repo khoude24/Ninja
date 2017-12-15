@@ -11,7 +11,7 @@ axios.get('/words/valid')
 
 
 $("#tech").tagsManager({
-    validator:   function validele(tag) {
+    validator:   function validWord(tag) {
         if (isInArray(tag.toLowerCase(), words)) {
             return true;
         } else {

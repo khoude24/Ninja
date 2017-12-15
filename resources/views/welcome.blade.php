@@ -5,29 +5,31 @@
 
         <h1>Hi <span class="job">ninja</span>!</h1>
 
-        <div v-show="isShow" class="ninja-name">
-            <div class="row">
-                <div class="col-md-12 col-sm-6">
-                    <div class="tile tile-profile">
-                        <img class="job_img" src="img/ninja.png" alt="">
-                        <h4>Your <span class="job">ninja</span> name is:</h4>
-                        <h3 v-html="name" class="text-center"></h3>
+        <div v-cloak>
+            <div v-show="isShow" class="ninja-name">
+                <div class="row">
+                    <div class="col-md-12 col-sm-6">
+                        <div class="tile tile-profile">
+                            <img class="job_img" src="img/ninja.png" alt="">
+                            <h4>Your <span class="job">ninja</span> name is:</h4>
+                            <h3 v-html="name" class="text-center"></h3>
+                        </div>
                     </div>
                 </div>
+
+                <h3>Share your name</h3>
+
+                <div id="social-links">
+                    <ul>
+                        <li>
+                            <a href="" id="twitter_link" class="social-button ">
+                                <span class="fa fa-twitter"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
-
-            <h3>Share your name</h3>
-
-            <div id="social-links">
-                <ul>
-                    <li>
-                        <a href="" id="twitter_link" class="social-button ">
-                            <span class="fa fa-twitter"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
         </div>
 
         <h3>To get your <span class="job">ninja</span> name, type some awesome words in the input field, and separate them with enter, comma, or tab.</h3>
