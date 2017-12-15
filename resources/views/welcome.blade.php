@@ -34,7 +34,7 @@
 
         <h3>To get your <span class="job">ninja</span> name, type some awesome words in the input field, and separate them with enter, comma, or tab.</h3>
 
-        <p><input type="text" id="tech" name="tags" placeholder="Enter some awesome words" class="tech-input"></p>
+        <p><input type="text" id="tech" name="tags" placeholder="Type words" class="tech-input"></p>
         <input type="hidden" id="secret" value="">
 
         <p class="text-center">
