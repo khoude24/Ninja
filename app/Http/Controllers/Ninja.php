@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\External\ExternalClientRepositoryInterface;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 
 class Ninja extends Controller
 {
+    private $external;
+
+    public function __construct(ExternalClientRepositoryInterface $external)
+    {
+        $this->external = $external;
+    }
 
     /**
      * Get Ninja/pirate name
@@ -22,14 +28,9 @@ class Ninja extends Controller
         //If konami code activated, get secret code
         $secret = $request->input('secret');
 
+        $test =  $this->external->call('ninjify', ['x' => $x, 'secret' => $secret], 'GET', false);
 
-        $client = new Client(); //GuzzleHttp\Client
-        $stat = $client->request('GET', config('app.api_url').'ninjify', [
-            'query' => ['x' => $x, 'secret' => $secret],
-            'verify' => false
-        ]);
-
-        return $stat->getBody();
+        return $test;
     }
 
 }

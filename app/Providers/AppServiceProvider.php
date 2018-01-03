@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            'App\Repositories\External\ExternalClientRepositoryInterface',
+            'App\Repositories\External\ExternalClientRepository'
+        );
     }
 }

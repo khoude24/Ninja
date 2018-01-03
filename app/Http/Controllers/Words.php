@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Auth\AuthRepository;
-use GuzzleHttp\Client;
+use App\Repositories\External\ExternalClientRepositoryInterface;
 use Illuminate\Http\Request;
 
 class Words extends Controller
@@ -12,23 +12,23 @@ class Words extends Controller
      * @var AuthRepository
      */
     private $authRepository;
+    private $external;
 
-    public function __construct(AuthRepository $authRepository)
+
+    public function __construct(AuthRepository $authRepository, ExternalClientRepositoryInterface $external)
     {
         $this->authRepository = $authRepository;
+        $this->external = $external;
     }
+
     /**
      * Get awesome words list
      * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-
-        $client = new Client(); //GuzzleHttp\Client
-        $stat = $client->get(config('app.api_url').'words', ['verify' => false]);
-
         return response()->json([
-            'words'    => json_decode($stat->getBody()),
+            'words'    => json_decode($this->external->call('words', [], 'GET')),
         ], 200);
     }
 
@@ -37,9 +37,7 @@ class Words extends Controller
      */
     public function validWord()
     {
-        $client = new Client(); //GuzzleHttp\Client
-        $stat = $client->get(config('app.api_url').'wordsList', ['verify' => false]);
-        return strtolower($stat->getBody());
+        return strtolower($this->external->call('wordsList', [], 'GET'));
     }
 
     /**
@@ -49,9 +47,6 @@ class Words extends Controller
      */
     public function store(Request $request)
     {
-        $client = new Client();
-
-
         // Add validation
         $this->validate($request, [
             'word'        => 'required|max:100',
@@ -59,11 +54,10 @@ class Words extends Controller
             'pirate_name' => 'required|max:15'
         ]);
 
-        $response = $client->request('put', config('app.api_url').'words/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['verify' => false, 'query' => ['token' => $this->authRepository->login()]]
-        );
+        $response = $this->external->call('words/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['token' => $this->authRepository->login()], 'put');
 
         return response()->json([
-            'word'    => json_decode($response->getBody()),
+            'word'    => json_decode($response),
             'message' => 'Success'
         ], 200);
     }
@@ -75,8 +69,7 @@ class Words extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = new Client();
-        $client->request('patch', config('app.api_url').'words/'.$id.'/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['verify' => false, 'query' => ['token' => $this->authRepository->login()]]);
+        $this->external->call('words/'.$id.'/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['token' => $this->authRepository->login()], 'patch');
     }
 
 
@@ -86,16 +79,6 @@ class Words extends Controller
      */
     public function destroy($id)
     {
-        $client = new Client();
-
-        $query = [
-            'id' => $id,
-            'token' => $this->authRepository->login()
-        ];
-
-        $client->request('delete', config('app.api_url').'words/'.$id, [
-            'query' => $query,
-            'verify' => false
-        ]);
+        $this->external->call('words/'.$id, ['token' => $this->authRepository->login()], 'delete');
     }
 }
