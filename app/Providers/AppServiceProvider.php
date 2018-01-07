@@ -27,5 +27,10 @@ class AppServiceProvider extends ServiceProvider
             'App\Repositories\External\ExternalClientRepositoryInterface',
             'App\Repositories\External\ExternalClientRepository'
         );
+
+        $this->app->bind(
+            'App\Repositories\Words\WordRepositoryInterface',
+            'App\Repositories\Words\WordRepository'
+        );
     }
 }

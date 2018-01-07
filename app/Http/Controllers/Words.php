@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Auth\AuthRepository;
 use App\Repositories\External\ExternalClientRepositoryInterface;
+use App\Repositories\Words\WordRepositoryInterface;
 use Illuminate\Http\Request;
 
 class Words extends Controller
@@ -13,12 +14,17 @@ class Words extends Controller
      */
     private $authRepository;
     private $external;
+    /**
+     * @var WordRepositoryInterface
+     */
+    private $wordRepository;
 
 
-    public function __construct(AuthRepository $authRepository, ExternalClientRepositoryInterface $external)
+    public function __construct(AuthRepository $authRepository, ExternalClientRepositoryInterface $external, WordRepositoryInterface $wordRepository)
     {
         $this->authRepository = $authRepository;
         $this->external = $external;
+        $this->wordRepository = $wordRepository;
     }
 
     /**
@@ -27,9 +33,7 @@ class Words extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'words'    => json_decode($this->external->call('words', [], 'GET')),
-        ], 200);
+        return $this->wordRepository->index();
     }
 
     /**
@@ -37,7 +41,7 @@ class Words extends Controller
      */
     public function validWord()
     {
-        return strtolower($this->external->call('wordsList', [], 'GET'));
+        return $this->wordRepository->validWord();
     }
 
     /**
@@ -54,12 +58,7 @@ class Words extends Controller
             'pirate_name' => 'required|max:15'
         ]);
 
-        $response = $this->external->call('words/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['token' => $this->authRepository->login()], 'put');
-
-        return response()->json([
-            'word'    => json_decode($response),
-            'message' => 'Success'
-        ], 200);
+        return $this->wordRepository->store($request);
     }
 
     /**
@@ -69,7 +68,7 @@ class Words extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->external->call('words/'.$id.'/'.$request->word.'/'.$request->name.'/'.$request->pirate_name, ['token' => $this->authRepository->login()], 'patch');
+        $this->wordRepository->update($request, $id);
     }
 
 
@@ -79,6 +78,6 @@ class Words extends Controller
      */
     public function destroy($id)
     {
-        $this->external->call('words/'.$id, ['token' => $this->authRepository->login()], 'delete');
+        $this->wordRepository->destroy($id);
     }
 }
